@@ -1,6 +1,22 @@
-import React from 'react'
+import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from 'react';
 
 export default function FormNV() {
+
+    const { register, handleSubmit, errors } = useForm();
+    
+    const [value, setValue] = useState("");
+    
+    const handleOnChange = event => {
+        console.log(event.target.value);
+        const { name, value } = event.target;
+        // setValue({ [name]: value });
+    };
+
+    const onSubmit = data => {
+        console.log(data);
+    }
+    
     return (
         <div className="modal fade" id="myModal">
             <div className="modal-dialog">
@@ -15,13 +31,16 @@ export default function FormNV() {
 				</div> */}
                     {/* Modal body */}
                     <div className="modal-body">
-                        <form role="form" id="formQLNV">
+                        <form onSubmit={handleSubmit(onSubmit)} role="form" id="formQLNV">
                             <div className="form-group">
                                 <div className="input-group">
                                     <div className="input-group-prepend">
                                         <span className="input-group-text"><i className="fa fa-user" /></span>
                                     </div>
                                     <input 
+                                        innerRef={register}
+                                        value={value.tk}
+                                        onChange={handleOnChange}
                                         type="text" 
                                         name="tk" 
                                         id="tknv" 
@@ -37,6 +56,9 @@ export default function FormNV() {
                                         <span className="input-group-text"><i className="fa fa-address-book" /></span>
                                     </div>
                                     <input 
+                                        innerRef={register}
+                                        value={value.name}
+                                        onChange={handleOnChange}
                                         type="name" 
                                         name="name" 
                                         id="hoTen" 
@@ -52,6 +74,9 @@ export default function FormNV() {
                                         <span className="input-group-text"><i className="fa fa-envelope" /></span>
                                     </div>
                                     <input 
+                                        innerRef={register}
+                                        value={value.email}
+                                        onChange={handleOnChange}
                                         type="email" 
                                         name="email" 
                                         id="email" 
@@ -67,6 +92,9 @@ export default function FormNV() {
                                         <span className="input-group-text"><i className="fa fa-key" /></span>
                                     </div>
                                     <input 
+                                        innerRef={register}
+                                        value={value.password}
+                                        onChange={handleOnChange}
                                         type="password" 
                                         name="password" 
                                         id="password" 
@@ -82,6 +110,9 @@ export default function FormNV() {
                                         <span className="input-group-text"><i className="fa fa-calendar" /></span>
                                     </div>
                                     <input 
+                                        innerRef={register}
+                                        value={value.ngaylam}
+                                        onChange={handleOnChange}
                                         type="text" 
                                         name="ngaylam" 
                                         id="datepicker" 
@@ -97,6 +128,9 @@ export default function FormNV() {
                                         <span className="input-group-text"><i className="fa fa-money" aria-hidden="true" /></span>
                                     </div>
                                     <input 
+                                        innerRef={register}
+                                        value={value.luongCB}
+                                        onChange={handleOnChange}
                                         type="text" 
                                         name="luongCB" 
                                         id="luongCB" 
@@ -112,8 +146,12 @@ export default function FormNV() {
                                         <span className="input-group-text"><i className="fa fa-briefcase" /></span>
                                     </div>
                                     <select 
+                                        innerRef={register}
+                                        value={value.chucVu}
+                                        onChange={handleOnChange}
                                         className="form-control" 
                                         id="chucvu"
+                                        name="chucVu"
                                     >
                                         <option>Chọn chức vụ</option>
                                         <option value="Sếp">Sếp</option>
@@ -129,6 +167,9 @@ export default function FormNV() {
                                         <span className="input-group-text"><i className="fa fa-clock-o" aria-hidden="true" /></span>
                                     </div>
                                     <input 
+                                        innerRef={register}
+                                        value={value.gioLam}
+                                        onChange={handleOnChange}
                                         type="text" 
                                         name="gioLam" 
                                         id="gioLam" 
@@ -138,11 +179,12 @@ export default function FormNV() {
                                 </div>
                                 <span className="sp-thongbao" id="tbGiolam" />
                             </div>
+                            <button id="btnThemNV" type="submit" className="btn btn-success">Thêm người dùng</button>
                         </form>
                     </div>
                     {/* Modal footer */}
                     <div className="modal-footer" id="modal-footer">
-                        <button id="btnThemNV" type="button" className="btn btn-success">Thêm người dùng</button>
+                        
                         <button id="btnCapNhat" type="button" className="btn btn-success">Cập nhật</button>
                         <button id="btnDong" type="button" className="btn btn-danger" data-dismiss="modal">Đóng</button>
                     </div>
