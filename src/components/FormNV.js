@@ -1,20 +1,37 @@
 import { useForm } from "react-hook-form";
 import React, { useEffect, useState } from 'react';
+import { nativeTouchData } from "react-dom/test-utils";
+import { callApi } from './utils/callApi';
 
 export default function FormNV() {
 
     const { register, handleSubmit, errors } = useForm();
     
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState({"account": "", "name": "", "email": "", "password": "", "startDate": "", "salary": "", "position": "", "hours": ""});
     
     const handleOnChange = event => {
         console.log(event.target.value);
-        const { name, value } = event.target;
-        // setValue({ [name]: value });
+        const { name } = event.target;
+        setValue({...value, [name]: event.target.value});
     };
 
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = () => {
+        console.log(value);
+        return createUser(value)
+    }
+
+    function createUser(value) {
+        callApi('listTodo', 'POST',
+        {
+            account: value.account,
+            name: value.name,
+            email: value.email,
+            password: value.password,
+            startDate: value.startDate,
+            salary: value.salary,
+            position: value.position,
+            hours: value.hours
+        });
     }
     
     return (
@@ -22,7 +39,7 @@ export default function FormNV() {
             <div className="modal-dialog">
                 <div className="modal-content">
                     <header className="head-form mb-0">
-                        <h2 id="header-title">Log In</h2>
+                        <h2 id="header-title">Thông tin nhân viên</h2>
                     </header>
                     {/* Modal Header */}
                     {/* 	<div class="modal-header">
@@ -39,10 +56,10 @@ export default function FormNV() {
                                     </div>
                                     <input 
                                         innerRef={register}
-                                        value={value.tk}
+                                        value={value.account}
                                         onChange={handleOnChange}
                                         type="text" 
-                                        name="tk" 
+                                        name="account" 
                                         id="tknv" 
                                         className="form-control input-sm" 
                                         placeholder="Tài khoản" 
@@ -111,13 +128,13 @@ export default function FormNV() {
                                     </div>
                                     <input 
                                         innerRef={register}
-                                        value={value.ngaylam}
+                                        value={value.startDate}
                                         onChange={handleOnChange}
                                         type="text" 
-                                        name="ngaylam" 
+                                        name="startDate" 
                                         id="datepicker" 
                                         className="form-control" 
-                                        placeholder="Ngày làm" 
+                                        placeholder="yyyy-mm-dd" 
                                     />
                                 </div>
                                 <span className="sp-thongbao" id="tbNgay" />
@@ -129,10 +146,10 @@ export default function FormNV() {
                                     </div>
                                     <input 
                                         innerRef={register}
-                                        value={value.luongCB}
+                                        value={value.salary}
                                         onChange={handleOnChange}
                                         type="text" 
-                                        name="luongCB" 
+                                        name="salary" 
                                         id="luongCB" 
                                         className="form-control input-sm" 
                                         placeholder="Lương cơ bản" 
@@ -147,16 +164,16 @@ export default function FormNV() {
                                     </div>
                                     <select 
                                         innerRef={register}
-                                        value={value.chucVu}
+                                        value={value.position}
                                         onChange={handleOnChange}
                                         className="form-control" 
                                         id="chucvu"
-                                        name="chucVu"
+                                        name="position"
                                     >
                                         <option>Chọn chức vụ</option>
-                                        <option value="Sếp">Sếp</option>
-                                        <option value="Trưởng phòng">Trưởng phòng</option>
-                                        <option value="Nhân viên">Nhân viên</option>
+                                        <option value="1">Sếp</option>
+                                        <option value="2">Trưởng phòng</option>
+                                        <option value="3">Nhân viên</option>
                                     </select>
                                 </div>
                                 <span className="sp-thongbao" id="tbChucVu" />
@@ -168,10 +185,10 @@ export default function FormNV() {
                                     </div>
                                     <input 
                                         innerRef={register}
-                                        value={value.gioLam}
+                                        value={value.hours}
                                         onChange={handleOnChange}
                                         type="text" 
-                                        name="gioLam" 
+                                        name="hours" 
                                         id="gioLam" 
                                         className="form-control input-sm" 
                                         placeholder="Giờ làm" 
